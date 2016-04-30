@@ -36,6 +36,9 @@ $> python
   * address: Memory address in hexadecimal format.
   * type: The string value of desired Type.
 
+#Disclaimer
+The author can not be held liable for any use of this code.
+
 
 [git-repo-url]: <https://github.com/Xustyx/xymemory.git>
 [git-memorpy-url]: <https://github.com/n1nj4sec/memorpy>
