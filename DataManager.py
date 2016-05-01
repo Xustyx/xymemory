@@ -84,29 +84,32 @@ class DataManager(object):
     def read_int(self, address):
         return struct.unpack('i', self.process.read_bytes(address,4))[0]
 
-    def write(self, address, type):
+    def write(self, address, data, type):
         if not self.is_open:
             raise DataException("Process is not open.")
 
-        if type == DataTypes.BYTE:
-            return self.write_byte(address)
-        elif type == DataTypes.STRING:
-            return self.write_string(address)
-        elif type == DataTypes.INT:
-            return self.write_int(address)
-        elif type == DataTypes.UINT:
-            return self.write_uint(address)
-        else:
-            raise DataException("Invalid data type.")
+        try:
+            if type == DataTypes.BYTE:
+                return self.write_byte(address, data)
+            elif type == DataTypes.STRING:
+                return self.write_string(address, data)
+            elif type == DataTypes.INT:
+                return self.write_int(address, data)
+            elif type == DataTypes.UINT:
+                return self.write_uint(address, data)
+            else:
+                raise DataException("Invalid data type.")
+        except ProcessException as e:
+            print e
 
-    def write_byte(self, address):
-        pass
+    def write_byte(self, address, data):
+        return self.process.write_bytes(address,data)
 
-    def write_string(self, address):
-        pass
+    def write_string(self, address, data):
+        return self.process.write_bytes(address, data)
 
-    def write_uint(self, address):
-        pass
+    def write_uint(self, address, data):
+        return self.process.write_bytes(address, struct.pack('I', data))
 
-    def write_int(self, address):
-        pass
+    def write_int(self, address, data):
+        return self.process.write_bytes(address, struct.pack('i', data))

@@ -35,6 +35,10 @@ $> python
 * read(address, type)
   * address: Memory address in hexadecimal format.
   * type: The string value of desired Type.
+* write(address, data, type)
+  * address: Memory address in hexadecimal format.
+  * data: The data to add.
+  * type: The string value of desired Type.
 
 #Disclaimer
 The author can not be held liable for any use of this code.

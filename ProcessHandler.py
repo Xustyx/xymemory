@@ -101,6 +101,21 @@ class ProcessHandler(object):
 
         return data
 
+    def write_bytes(self, address, data):
+        buffer = create_string_buffer(data)
+        sizeWriten = c_ulong(0)
+        bufferSize = sizeof(buffer) - 1
+
+        result = WriteProcessMemory(self.h_process, address, buffer, bufferSize, byref(sizeWriten))
+
+        if result == 0:
+            raise ProcessException(
+                        'Error %s in WriteProcessMemory(%08x, write=%d)' % ( GetLastError(),
+                                                                                address,
+                                                                                sizeWriten))
+        return result
+
+
     def create_string_buffer(init, size=None):
         if isinstance(init, (str, unicode)):
             if size is None:
