@@ -23,6 +23,7 @@
 from ctypes import *
 from win32api import *
 import psutil
+import win32security
 
 """WinApi methods"""
 K32 = windll.kernel32
@@ -62,6 +63,14 @@ class ProcessHandler(object):
     def open(self):
         if self.process is None:
             raise ProcessException("The selected process does not exist")
+
+        """Debug this proccess 3:)"""
+        process = OpenProcess(262144, 0, self.process.pid)
+        info = win32security.GetSecurityInfo(GetCurrentProcess(), 6, 0)
+        win32security.SetSecurityInfo(process, 6,
+                                      win32security.DACL_SECURITY_INFORMATION | win32security.UNPROTECTED_DACL_SECURITY_INFORMATION,
+                                      None, None, info.GetSecurityDescriptorDacl(), info.GetSecurityDescriptorGroup())
+        CloseHandle(process)
 
         self.h_process = OpenProcess(PAA, False, self.process.pid)
         if self.h_process is None:
