@@ -40,7 +40,7 @@ $> python
   * data: The data to add.
   * type: The string value of desired Type.
 
-#Disclaimer
+# Disclaimer
 The author can not be held liable for any use of this code.
 
 
